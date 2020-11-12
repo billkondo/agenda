@@ -1,26 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Grid, Button } from '@material-ui/core';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid container direction="column">
+      <Grid item>
+        <Button>Sign Up</Button>
+      </Grid>
+      <Grid item>
+        <Button>Sign In</Button>
+      </Grid>
+      <Grid item>
+        <Button>Skip</Button>
+      </Grid>
+    </Grid>
   );
-}
+};
 
 export default App;
