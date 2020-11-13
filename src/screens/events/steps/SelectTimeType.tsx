@@ -16,6 +16,8 @@ const SelectTimeType: React.FC<Props> = ({
   eventTimeType,
   setEventTimeType,
 }) => {
+  const wasEventTimeTypeSelected = eventTimeType !== null;
+
   return (
     <Grid container direction="column">
       <Grid item>
@@ -48,7 +50,12 @@ const SelectTimeType: React.FC<Props> = ({
       </Grid>
 
       <Grid item>
-        <Button onClick={onNextButtonClicked}>Next Step</Button>
+        <Button
+          onClick={onNextButtonClicked}
+          disabled={!wasEventTimeTypeSelected}
+        >
+          Next Step
+        </Button>
       </Grid>
     </Grid>
   );
