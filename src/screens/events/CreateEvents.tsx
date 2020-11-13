@@ -7,6 +7,7 @@ import { useSteps } from './hooks/steps';
 import SelectUserTimeZone from './steps/select_user_time_zone/SelectUserTimeZone';
 import SelectEventTimeZone from './steps/select_event_time_zone/SelectEventTimeZone';
 import SelectTimeType from './steps/SelectTimeType';
+import SelectDateTime from './steps/select_date_time/SelectDateTime';
 
 const CreateEvents = () => {
   const { step, moveNextStep, movePreviousStep } = useSteps();
@@ -63,6 +64,17 @@ const Step = ({ step, moveNextStep, movePreviousStep, form }: StepProps) => {
           eventTimeType={form.eventTimeType}
           setEventTimeType={form.setEventTimeType}
         ></SelectTimeType>
+      );
+
+    case 3:
+      return (
+        <SelectDateTime
+          onBackButtonClicked={movePreviousStep}
+          userDateTime={form.userDateTime}
+          setUserDateTime={form.setUserDateTime}
+          eventDateTime={form.eventDateTime}
+          setEventDateTime={form.setEventDateTime}
+        ></SelectDateTime>
       );
   }
 
