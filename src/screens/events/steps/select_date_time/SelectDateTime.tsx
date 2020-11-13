@@ -1,4 +1,5 @@
 import React from 'react';
+import { Moment } from 'moment';
 import { Grid, Typography, Button } from '@material-ui/core';
 
 import DateTimeSelector from './DateTimeSelector';
@@ -6,11 +7,11 @@ import DateTimeSelector from './DateTimeSelector';
 type Props = {
   onBackButtonClicked: () => void;
 
-  userDateTime: Date | null;
-  setUserDateTime: (dateTime: Date) => void;
+  userDateTime: Moment | null;
+  setUserDateTime: (dateTime: Moment) => void;
 
-  eventDateTime: Date | null;
-  setEventDateTime: (dateTime: Date) => void;
+  eventDateTime: Moment | null;
+  setEventDateTime: (dateTime: Moment) => void;
 };
 
 const SelectDateTime: React.FC<Props> = ({

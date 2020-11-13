@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Moment } from 'moment';
 
 import { EventTimeType } from 'entities/event_time_type';
 import { TimeZone } from 'entities/time_zone';
@@ -15,11 +16,11 @@ export type Form = {
   eventTimeType: EventTimeType | null;
   setEventTimeType: (evenTimeType: EventTimeType) => void;
 
-  userDateTime: Date | null;
-  setUserDateTime: (dateTime: Date) => void;
+  userDateTime: Moment | null;
+  setUserDateTime: (dateTime: Moment) => void;
 
-  eventDateTime: Date | null;
-  setEventDateTime: (dateTime: Date) => void;
+  eventDateTime: Moment | null;
+  setEventDateTime: (dateTime: Moment) => void;
 };
 
 export const useForm = (): Form => {
@@ -28,18 +29,22 @@ export const useForm = (): Form => {
   const [eventTimeType, setEventTimeType] = useState<EventTimeType | null>(
     null
   );
-  const [userDateTime, _setUserDateTime] = useState<Date | null>(null);
-  const [eventDateTime, setEventDateTime] = useState<Date | null>(null);
+  const [userDateTime, _setUserDateTime] = useState<Moment | null>(null);
+  const [eventDateTime, _setEventDateTime] = useState<Moment | null>(null);
 
   const { convertTimeZone } = useTimeZoneConversion();
 
-  const setUserDateTime = (date: Date) => {
-    // TODO complete this part
+  const setDateTime = (
+    timeZone: TimeZone | null,
+    updateFirst: (date: Moment) => void,
+    updateSecond: (date: Moment) => void
+  ) => (date: Moment) => {
+    if (timeZone === null)
+      throw new Error('timeZone was not supposed to be null');
 
-    if (eventTimeZone === null)
-      throw new Error('eventTimeZone was not supposed to be null');
-
-    convertTimeZone(date, eventTimeZone);
+    const convertedTime = convertTimeZone(date, timeZone);
+    updateFirst(date);
+    updateSecond(convertedTime);
   };
 
   return {
@@ -50,8 +55,16 @@ export const useForm = (): Form => {
     eventTimeType,
     setEventTimeType,
     userDateTime,
-    setUserDateTime,
+    setUserDateTime: setDateTime(
+      eventTimeZone,
+      _setUserDateTime,
+      _setEventDateTime
+    ),
     eventDateTime,
-    setEventDateTime,
+    setEventDateTime: setDateTime(
+      userTimeZone,
+      _setEventDateTime,
+      _setUserDateTime
+    ),
   };
 };

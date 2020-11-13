@@ -1,4 +1,5 @@
 import React from 'react';
+import { Moment } from 'moment';
 import { Grid, Typography } from '@material-ui/core';
 
 import DatePicker from 'components/date_picker';
@@ -6,8 +7,8 @@ import TimePicker from 'components/time_picker';
 
 type Props = {
   title: string;
-  dateTime: Date | null;
-  setDateTime: (dateTime: Date) => void;
+  dateTime: Moment | null;
+  setDateTime: (dateTime: Moment) => void;
 };
 
 const DateTimeSelector: React.FC<Props> = ({
