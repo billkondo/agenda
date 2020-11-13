@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 
 import { TimeZone } from 'entities/time_zone';
 import CurrentLocationButton from 'components/current_location_button/';
-import GmtSelector from 'components/GmtSelector';
+import TimeZonePicker from 'components/time_zone_picker';
 import SelectedTimeZone from 'components/SelectedTimeZone';
 
 type Props = {
@@ -21,10 +21,7 @@ const TimeZoneSelector = ({ timeZone, setTimeZone }: Props) => {
       </Grid>
 
       <Grid item container>
-        <GmtSelector
-          timeZone={timeZone}
-          onTimeZoneSelected={setTimeZone}
-        ></GmtSelector>
+        <TimeZonePicker setTimeZone={setTimeZone}></TimeZonePicker>
       </Grid>
 
       <Grid item>
