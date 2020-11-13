@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import timezones from 'config/timezones.json';
+
+import { remove } from 'remove-accents';
 
 export type Suggestion = {
   offset: number;
@@ -6,28 +9,13 @@ export type Suggestion = {
 };
 
 export const useLogic = () => {
-  const [suggestions, setSuggestions] = useState<Array<Suggestion>>([
-    {
-      offset: -1,
-      timezone_name: 'aa',
-    },
-    {
-      offset: +3,
-      timezone_name: 'bb',
-    },
-    {
-      offset: 0,
-      timezone_name: 'cc',
-    },
-  ]);
+  const [suggestions, setSuggestions] = useState<Array<Suggestion>>([]);
 
-  const updateSuggestions = ({}) => {
-    console.log('UPDATE');
+  const updateSuggestions = ({ value }: { value: string }) => {
+    setSuggestions(_filter(remove(value).toLowerCase()));
   };
 
-  const clearSuggestions = () => {
-    console.log('CLEAR');
-  };
+  const clearSuggestions = () => setSuggestions([]);
 
   return {
     suggestions,
@@ -35,3 +23,10 @@ export const useLogic = () => {
     clearSuggestions,
   };
 };
+
+const _filter = (value: string): Array<Suggestion> =>
+  timezones
+    .filter(
+      (timezone) => timezone.timezone_name.toLowerCase().indexOf(value) !== -1
+    )
+    .slice(0, 5);
