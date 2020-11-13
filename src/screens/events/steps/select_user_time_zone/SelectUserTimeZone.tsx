@@ -21,6 +21,7 @@ const SelectUserTimeZone = ({
   const { onCurrentLocationClicked } = useSelectUserTimeZone({
     setUserTimeZone,
   });
+  const isUserTimeZoneSelected = !!userTimeZone;
 
   return (
     <Grid container direction="column">
@@ -44,7 +45,9 @@ const SelectUserTimeZone = ({
       </Grid>
 
       <Grid item>
-        <Button onClick={moveNext}>Next step</Button>
+        <Button onClick={moveNext} disabled={!isUserTimeZoneSelected}>
+          Next step
+        </Button>
       </Grid>
     </Grid>
   );
