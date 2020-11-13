@@ -4,6 +4,7 @@ import { Grid, Button, Typography } from '@material-ui/core';
 import { TimeZone } from 'entities/time_zone';
 import { useSelectUserTimeZone } from './useSelectUserTimeZone';
 
+import GmtSelector from 'components/GmtSelector';
 import SelectedTimeZone from './SelectedTimeZone';
 
 type Props = {
@@ -29,6 +30,13 @@ const SelectUserTimeZone = ({
 
       <Grid item>
         <Button onClick={onCurrentLocationClicked}>Current Location</Button>
+      </Grid>
+
+      <Grid item container xs={12}>
+        <GmtSelector
+          timeZone={userTimeZone}
+          onTimeZoneSelected={setUserTimeZone}
+        ></GmtSelector>
       </Grid>
 
       <Grid item>

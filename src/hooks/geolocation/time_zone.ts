@@ -25,5 +25,5 @@ const _fetchTimeZone = async (location: Location): Promise<TimeZone> => {
   });
   const { gmt_offset, timezone_name } = response.data;
 
-  return new TimeZone(gmt_offset, timezone_name);
+  return new TimeZone(gmt_offset, { timezone_name });
 };
