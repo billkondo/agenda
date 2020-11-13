@@ -4,8 +4,8 @@ import { Grid, Typography } from '@material-ui/core';
 import { useForm, Form } from './hooks/form';
 import { useSteps } from './hooks/steps';
 
-import SelectUserTimeZone from './steps/select_user_time_zone';
-import SelectEventTimeZone from './steps/SelectEventTimeZone';
+import SelectUserTimeZone from './steps/select_user_time_zone/SelectUserTimeZone';
+import SelectEventTimeZone from './steps/select_event_time_zone/SelectEventTimeZone';
 
 const CreateEvents = () => {
   const { step, moveNextStep, movePreviousStep } = useSteps();
@@ -49,6 +49,8 @@ const Step = ({ step, moveNextStep, movePreviousStep, form }: StepProps) => {
         <SelectEventTimeZone
           moveNext={moveNextStep}
           movePrevious={movePreviousStep}
+          eventTimeZone={form.eventTimeZone}
+          setEventTimeZone={form.setEventTimeZone}
         ></SelectEventTimeZone>
       );
   }

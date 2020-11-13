@@ -2,10 +2,7 @@ import React from 'react';
 import { Grid, Button, Typography } from '@material-ui/core';
 
 import { TimeZone } from 'entities/time_zone';
-import { useSelectUserTimeZone } from './useSelectUserTimeZone';
-
-import GmtSelector from 'components/GmtSelector';
-import SelectedTimeZone from './SelectedTimeZone';
+import TimeZoneSelector from 'components/TimeZoneSelector';
 
 type Props = {
   moveNext: () => void;
@@ -18,9 +15,6 @@ const SelectUserTimeZone = ({
   userTimeZone,
   setUserTimeZone,
 }: Props) => {
-  const { onCurrentLocationClicked } = useSelectUserTimeZone({
-    setUserTimeZone,
-  });
   const isUserTimeZoneSelected = !!userTimeZone;
 
   return (
@@ -30,18 +24,10 @@ const SelectUserTimeZone = ({
       </Grid>
 
       <Grid item>
-        <Button onClick={onCurrentLocationClicked}>Current Location</Button>
-      </Grid>
-
-      <Grid item container xs={12}>
-        <GmtSelector
+        <TimeZoneSelector
           timeZone={userTimeZone}
-          onTimeZoneSelected={setUserTimeZone}
-        ></GmtSelector>
-      </Grid>
-
-      <Grid item>
-        <SelectedTimeZone timeZone={userTimeZone}></SelectedTimeZone>
+          setTimeZone={setUserTimeZone}
+        ></TimeZoneSelector>
       </Grid>
 
       <Grid item>
