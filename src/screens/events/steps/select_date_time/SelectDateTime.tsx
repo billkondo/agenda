@@ -1,17 +1,25 @@
 import React from 'react';
-import { Moment } from 'moment';
+import { DateTime } from 'luxon';
 import { Grid, Typography, Button } from '@material-ui/core';
 
+import { TimeZone } from 'entities/time_zone';
 import DateTimeSelector from './DateTimeSelector';
+import GmtOffsetText from 'components/GmtOffsetText';
 
 type Props = {
   onBackButtonClicked: () => void;
 
-  userDateTime: Moment | null;
-  setUserDateTime: (dateTime: Moment) => void;
+  userDateTime: DateTime | null;
+  setUserDateTime: (dateTime: DateTime) => void;
 
-  eventDateTime: Moment | null;
-  setEventDateTime: (dateTime: Moment) => void;
+  eventDateTime: DateTime | null;
+  setEventDateTime: (dateTime: DateTime) => void;
+
+  baseTimeZone: TimeZone | null;
+  setBaseTimeZone: (timeZone: TimeZone) => void;
+
+  userTimeZone: TimeZone;
+  eventTimeZone: TimeZone;
 };
 
 const SelectDateTime: React.FC<Props> = ({
@@ -20,7 +28,13 @@ const SelectDateTime: React.FC<Props> = ({
   setUserDateTime,
   eventDateTime,
   setEventDateTime,
+  baseTimeZone,
+  setBaseTimeZone,
+  userTimeZone,
+  eventTimeZone,
 }) => {
+  const wasBaseTimeZoneSelected = !!baseTimeZone;
+
   return (
     <Grid container direction="column">
       <Grid item>
@@ -31,30 +45,74 @@ const SelectDateTime: React.FC<Props> = ({
       </Grid>
       <Grid item container>
         <Grid item>
-          <Button>Your Location</Button>
+          <TimeZoneButton
+            text="Your Location"
+            value={userTimeZone}
+            setValue={setBaseTimeZone}
+            selectedValue={baseTimeZone}
+          ></TimeZoneButton>
         </Grid>
         <Grid item>
-          <Button>Event Location</Button>
+          <TimeZoneButton
+            text="Event Location"
+            value={eventTimeZone}
+            setValue={setBaseTimeZone}
+            selectedValue={baseTimeZone}
+          ></TimeZoneButton>
         </Grid>
       </Grid>
-      <Grid item container>
-        <Grid item xs={6}>
-          <DateTimeSelector
-            title="Your Location"
-            dateTime={userDateTime}
-            setDateTime={setUserDateTime}
-          ></DateTimeSelector>
-        </Grid>
+      {wasBaseTimeZoneSelected && (
+        <Grid item container>
+          <Grid item container xs={6}>
+            <Grid item>
+              <GmtOffsetText offset={userTimeZone!.gmt_offset}></GmtOffsetText>
+            </Grid>
+            <Grid item>
+              <DateTimeSelector
+                title="Your Location"
+                dateTime={userDateTime}
+                setDateTime={setUserDateTime}
+              ></DateTimeSelector>
+            </Grid>
+          </Grid>
 
-        <Grid item xs={6}>
-          <DateTimeSelector
-            title="Event Location"
-            dateTime={eventDateTime}
-            setDateTime={setEventDateTime}
-          ></DateTimeSelector>
+          <Grid item container xs={6}>
+            <Grid item>
+              <GmtOffsetText offset={eventTimeZone!.gmt_offset}></GmtOffsetText>
+            </Grid>
+            <Grid item>
+              <DateTimeSelector
+                title="Event Location"
+                dateTime={eventDateTime}
+                setDateTime={setEventDateTime}
+              ></DateTimeSelector>
+            </Grid>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </Grid>
+  );
+};
+
+type TimeZoneButtonProps = {
+  text: string;
+  value: TimeZone;
+  setValue: (timeZone: TimeZone) => void;
+  selectedValue: TimeZone | null;
+};
+
+const TimeZoneButton: React.FC<TimeZoneButtonProps> = ({
+  text,
+  value,
+  setValue,
+  selectedValue,
+}) => {
+  const onClick = () => setValue(value);
+  const isSelected = value === selectedValue;
+  return (
+    <Button onClick={onClick} variant={isSelected ? 'contained' : 'text'}>
+      {text}
+    </Button>
   );
 };
 

@@ -1,27 +1,27 @@
 import React from 'react';
-import { Moment } from 'moment';
+import { DateTime } from 'luxon';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { DatePicker } from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
+import LuxonUtils from '@date-io/luxon';
 
 type Props = {
-  date: Moment | null;
-  setDate: (date: Moment) => void;
+  date: DateTime | null;
+  setDate: (date: DateTime) => void;
 };
 
 const AppDatePicker: React.FC<Props> = ({ date, setDate }) => {
-  const onChange = (newDate: Moment | null) => {
+  const onChange = (newDate: DateTime | null) => {
     if (newDate !== null) setDate(newDate);
   };
 
   return (
-    <MuiPickersUtilsProvider utils={MomentUtils}>
+    <MuiPickersUtilsProvider utils={LuxonUtils}>
       <DatePicker
         disableToolbar
         variant="inline"
         margin="normal"
         label="Date"
-        format="MM/DD/yyyy"
+        format="MM/dd/yy"
         value={date}
         onChange={onChange}
       />

@@ -74,6 +74,10 @@ const Step = ({ step, moveNextStep, movePreviousStep, form }: StepProps) => {
           setUserDateTime={form.setUserDateTime}
           eventDateTime={form.eventDateTime}
           setEventDateTime={form.setEventDateTime}
+          baseTimeZone={form.baseTimeZone}
+          setBaseTimeZone={form.setBaseTimeZone}
+          userTimeZone={form.userTimeZone!}
+          eventTimeZone={form.eventTimeZone!}
         ></SelectDateTime>
       );
   }

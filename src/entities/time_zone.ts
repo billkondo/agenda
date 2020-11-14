@@ -9,7 +9,7 @@ const defaultOptionalParams: OptionalParams = {
 
 export class TimeZone {
   gmt_offset: number;
-  timezone_name: string | null;
+  timezone_name: string;
 
   constructor(gmt_offset: number, optional = defaultOptionalParams) {
     assert(gmt_offset != null);
@@ -17,6 +17,6 @@ export class TimeZone {
     const { timezone_name } = optional;
 
     this.gmt_offset = gmt_offset;
-    this.timezone_name = timezone_name;
+    this.timezone_name = timezone_name ?? '';
   }
 }

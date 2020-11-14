@@ -1,21 +1,21 @@
 import React from 'react';
-import { Moment } from 'moment';
+import { DateTime } from 'luxon';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { TimePicker } from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
+import LuxonUtils from '@date-io/luxon';
 
 type Props = {
-  time: Moment | null;
-  setTime: (time: Moment) => void;
+  time: DateTime | null;
+  setTime: (time: DateTime) => void;
 };
 
 const AppTimePicker: React.FC<Props> = ({ time, setTime }) => {
-  const onChange = (newTime: Moment | null) => {
+  const onChange = (newTime: DateTime | null) => {
     if (newTime !== null) setTime(newTime);
   };
 
   return (
-    <MuiPickersUtilsProvider utils={MomentUtils}>
+    <MuiPickersUtilsProvider utils={LuxonUtils}>
       <TimePicker
         value={time}
         onChange={onChange}

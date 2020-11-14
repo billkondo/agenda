@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { Moment } from 'moment';
+import { DateTime, Settings } from 'luxon';
 
 import { EventTimeType } from 'entities/event_time_type';
 import { TimeZone } from 'entities/time_zone';
-
-import { useTimeZoneConversion } from 'hooks/date_time/time_zone_convertion';
 
 export type Form = {
   userTimeZone: TimeZone | null;
@@ -16,11 +14,14 @@ export type Form = {
   eventTimeType: EventTimeType | null;
   setEventTimeType: (evenTimeType: EventTimeType) => void;
 
-  userDateTime: Moment | null;
-  setUserDateTime: (dateTime: Moment) => void;
+  baseTimeZone: TimeZone | null;
+  setBaseTimeZone: (timeZone: TimeZone) => void;
 
-  eventDateTime: Moment | null;
-  setEventDateTime: (dateTime: Moment) => void;
+  userDateTime: DateTime | null;
+  setUserDateTime: (dateTime: DateTime) => void;
+
+  eventDateTime: DateTime | null;
+  setEventDateTime: (dateTime: DateTime) => void;
 };
 
 export const useForm = (): Form => {
@@ -29,22 +30,25 @@ export const useForm = (): Form => {
   const [eventTimeType, setEventTimeType] = useState<EventTimeType | null>(
     null
   );
-  const [userDateTime, _setUserDateTime] = useState<Moment | null>(null);
-  const [eventDateTime, _setEventDateTime] = useState<Moment | null>(null);
-
-  const { convertTimeZone } = useTimeZoneConversion();
+  const [userDateTime, _setUserDateTime] = useState<DateTime | null>(null);
+  const [eventDateTime, _setEventDateTime] = useState<DateTime | null>(null);
+  const [baseTimeZone, _setBaseTimeZone] = useState<TimeZone | null>(null);
 
   const setDateTime = (
-    timeZone: TimeZone | null,
-    updateFirst: (date: Moment) => void,
-    updateSecond: (date: Moment) => void
-  ) => (date: Moment) => {
-    if (timeZone === null)
-      throw new Error('timeZone was not supposed to be null');
-
-    const convertedTime = convertTimeZone(date, timeZone);
+    updateFirst: (date: DateTime) => void,
+    secondTimeZone: TimeZone | null,
+    updateSecond: (date: DateTime) => void
+  ) => (date: DateTime) => {
+    const isoDate = date.toISO();
     updateFirst(date);
-    updateSecond(convertedTime);
+    updateSecond(
+      DateTime.fromISO(isoDate, { zone: secondTimeZone!.timezone_name })
+    );
+  };
+
+  const setBaseTimeZone = (timeZone: TimeZone) => {
+    _setBaseTimeZone(timeZone);
+    Settings.defaultZoneName = timeZone.timezone_name;
   };
 
   return {
@@ -56,15 +60,17 @@ export const useForm = (): Form => {
     setEventTimeType,
     userDateTime,
     setUserDateTime: setDateTime(
-      eventTimeZone,
       _setUserDateTime,
+      eventTimeZone,
       _setEventDateTime
     ),
     eventDateTime,
     setEventDateTime: setDateTime(
-      userTimeZone,
       _setEventDateTime,
+      userTimeZone,
       _setUserDateTime
     ),
+    baseTimeZone,
+    setBaseTimeZone,
   };
 };
