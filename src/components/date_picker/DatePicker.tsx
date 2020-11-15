@@ -7,9 +7,14 @@ import LuxonUtils from '@date-io/luxon';
 type Props = {
   date: DateTime | null;
   setDate: (date: DateTime) => void;
+  disabled?: boolean;
 };
 
-const AppDatePicker: React.FC<Props> = ({ date, setDate }) => {
+const AppDatePicker: React.FC<Props> = ({
+  date,
+  setDate,
+  disabled = false,
+}) => {
   const onChange = (newDate: DateTime | null) => {
     if (newDate !== null) setDate(newDate);
   };
@@ -24,6 +29,7 @@ const AppDatePicker: React.FC<Props> = ({ date, setDate }) => {
         format="MM/dd/yy"
         value={date}
         onChange={onChange}
+        disabled={disabled}
       />
     </MuiPickersUtilsProvider>
   );

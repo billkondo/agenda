@@ -33,7 +33,8 @@ const SelectDateTime: React.FC<Props> = ({
   userTimeZone,
   eventTimeZone,
 }) => {
-  const wasBaseTimeZoneSelected = !!baseTimeZone;
+  const wasBaseTimeZoneSelected =
+    baseTimeZone === userTimeZone || baseTimeZone === eventTimeZone;
 
   return (
     <Grid container direction="column">
@@ -63,7 +64,7 @@ const SelectDateTime: React.FC<Props> = ({
       </Grid>
       {wasBaseTimeZoneSelected && (
         <Grid item container>
-          <Grid item container xs={6}>
+          <Grid item container xs={6} direction="column">
             <Grid item>
               <GmtOffsetText offset={userTimeZone!.gmt_offset}></GmtOffsetText>
             </Grid>
@@ -72,11 +73,12 @@ const SelectDateTime: React.FC<Props> = ({
                 title="Your Location"
                 dateTime={userDateTime}
                 setDateTime={setUserDateTime}
+                disabled={baseTimeZone !== userTimeZone}
               ></DateTimeSelector>
             </Grid>
           </Grid>
 
-          <Grid item container xs={6}>
+          <Grid item container xs={6} direction="column">
             <Grid item>
               <GmtOffsetText offset={eventTimeZone!.gmt_offset}></GmtOffsetText>
             </Grid>
@@ -85,6 +87,7 @@ const SelectDateTime: React.FC<Props> = ({
                 title="Event Location"
                 dateTime={eventDateTime}
                 setDateTime={setEventDateTime}
+                disabled={baseTimeZone !== eventTimeZone}
               ></DateTimeSelector>
             </Grid>
           </Grid>

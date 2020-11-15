@@ -7,9 +7,14 @@ import LuxonUtils from '@date-io/luxon';
 type Props = {
   time: DateTime | null;
   setTime: (time: DateTime) => void;
+  disabled?: boolean;
 };
 
-const AppTimePicker: React.FC<Props> = ({ time, setTime }) => {
+const AppTimePicker: React.FC<Props> = ({
+  time,
+  setTime,
+  disabled = false,
+}) => {
   const onChange = (newTime: DateTime | null) => {
     if (newTime !== null) setTime(newTime);
   };
@@ -20,6 +25,7 @@ const AppTimePicker: React.FC<Props> = ({ time, setTime }) => {
         value={time}
         onChange={onChange}
         variant="inline"
+        disabled={disabled}
       ></TimePicker>
     </MuiPickersUtilsProvider>
   );

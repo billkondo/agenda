@@ -9,12 +9,14 @@ type Props = {
   title: string;
   dateTime: DateTime | null;
   setDateTime: (dateTime: DateTime) => void;
+  disabled?: boolean;
 };
 
 const DateTimeSelector: React.FC<Props> = ({
   title,
   dateTime,
   setDateTime,
+  disabled,
 }) => {
   return (
     <Grid container direction="column">
@@ -22,10 +24,18 @@ const DateTimeSelector: React.FC<Props> = ({
         <Typography>{title}</Typography>
       </Grid>
       <Grid item>
-        <DatePicker date={dateTime} setDate={setDateTime}></DatePicker>
+        <DatePicker
+          date={dateTime}
+          setDate={setDateTime}
+          disabled={disabled}
+        ></DatePicker>
       </Grid>
       <Grid item>
-        <TimePicker time={dateTime} setTime={setDateTime}></TimePicker>
+        <TimePicker
+          time={dateTime}
+          setTime={setDateTime}
+          disabled={disabled}
+        ></TimePicker>
       </Grid>
     </Grid>
   );
