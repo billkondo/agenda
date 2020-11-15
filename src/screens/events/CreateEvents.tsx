@@ -70,6 +70,7 @@ const Step = ({ step, moveNextStep, movePreviousStep, form }: StepProps) => {
       return (
         <SelectDateTime
           onBackButtonClicked={movePreviousStep}
+          onContinueButtonClicked={moveNextStep}
           userDateTime={form.userDateTime}
           setUserDateTime={form.setUserDateTime}
           eventDateTime={form.eventDateTime}

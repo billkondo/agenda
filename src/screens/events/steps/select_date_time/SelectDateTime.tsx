@@ -8,6 +8,7 @@ import GmtOffsetText from 'components/GmtOffsetText';
 
 type Props = {
   onBackButtonClicked: () => void;
+  onContinueButtonClicked: () => void;
 
   userDateTime: DateTime | null;
   setUserDateTime: (dateTime: DateTime) => void;
@@ -24,6 +25,7 @@ type Props = {
 
 const SelectDateTime: React.FC<Props> = ({
   onBackButtonClicked,
+  onContinueButtonClicked,
   userDateTime,
   setUserDateTime,
   eventDateTime,
@@ -35,6 +37,8 @@ const SelectDateTime: React.FC<Props> = ({
 }) => {
   const wasBaseTimeZoneSelected =
     baseTimeZone === userTimeZone || baseTimeZone === eventTimeZone;
+
+  const wasDateTimeSelected = userDateTime !== null && eventDateTime !== null;
 
   return (
     <Grid container direction="column">
@@ -93,6 +97,14 @@ const SelectDateTime: React.FC<Props> = ({
           </Grid>
         </Grid>
       )}
+      <Grid item>
+        <Button
+          disabled={!wasDateTimeSelected}
+          onClick={onContinueButtonClicked}
+        >
+          Next Step
+        </Button>
+      </Grid>
     </Grid>
   );
 };
