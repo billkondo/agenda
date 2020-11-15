@@ -8,6 +8,8 @@ import SelectUserTimeZone from './steps/select_user_time_zone/SelectUserTimeZone
 import SelectEventTimeZone from './steps/select_event_time_zone/SelectEventTimeZone';
 import SelectTimeType from './steps/SelectTimeType';
 import SelectDateTime from './steps/select_date_time/SelectDateTime';
+import CompareTimeZones from './steps/compare_timezones';
+import SelectTitleDescription from './steps/select_title_description';
 
 const CreateEvents = () => {
   const { step, moveNextStep, movePreviousStep } = useSteps();
@@ -80,6 +82,21 @@ const Step = ({ step, moveNextStep, movePreviousStep, form }: StepProps) => {
           userTimeZone={form.userTimeZone!}
           eventTimeZone={form.eventTimeZone!}
         ></SelectDateTime>
+      );
+
+    case 4:
+      return (
+        <CompareTimeZones
+          onBackButtonClicked={movePreviousStep}
+          onContinueButtonClicked={moveNextStep}
+        ></CompareTimeZones>
+      );
+
+    case 5:
+      return (
+        <SelectTitleDescription
+          onBackButtonPressed={movePreviousStep}
+        ></SelectTitleDescription>
       );
   }
 
