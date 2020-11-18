@@ -19,6 +19,7 @@
     "@types/react-redux": "^7.1.11",
     "@types/react-router-dom": "^5.1.6",
     "axios": "^0.21.0",
+    "firebase": "^8.0.2",
     "luxon": "^1.25.0",
     "react": "^17.0.1",
     "react-autosuggest": "^10.0.3",
