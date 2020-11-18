@@ -1,10 +1,11 @@
 import React from 'react';
-import { Grid, TextField, IconButton, Button } from '@material-ui/core';
+import { Grid, TextField, IconButton } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 
-import { useForm } from './form';
+import { useLogic } from './logic';
 
 import { PasswordInput } from 'components/inputs';
+import { SubmitButton } from 'components/buttons';
 
 type Props = {
   onBackButtonPressed: () => void;
@@ -13,7 +14,14 @@ type Props = {
 const AuthenticationMenuCreateAccount: React.FC<Props> = ({
   onBackButtonPressed,
 }) => {
-  const { form, errors, onFormChange, submit } = useForm();
+  const {
+    form,
+    errors,
+    onFormChange,
+    submit,
+    createAccountErrorMessage,
+    isCreatingAccount,
+  } = useLogic();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
@@ -38,6 +46,7 @@ const AuthenticationMenuCreateAccount: React.FC<Props> = ({
           fullWidth
           error={!!errors.email}
           helperText={errors.email}
+          disabled={isCreatingAccount}
         ></TextField>
       </Grid>
 
@@ -47,6 +56,7 @@ const AuthenticationMenuCreateAccount: React.FC<Props> = ({
           setPassword={(password) => onFormChange('password', password)}
           error={errors.password}
           label="Password"
+          disabled={isCreatingAccount}
         ></PasswordInput>
       </Grid>
 
@@ -56,11 +66,17 @@ const AuthenticationMenuCreateAccount: React.FC<Props> = ({
           setPassword={(password) => onFormChange('confirmPassword', password)}
           error={errors.confirmPassword}
           label="Confirm Password"
+          disabled={isCreatingAccount}
         ></PasswordInput>
       </Grid>
 
       <Grid item>
-        <Button onClick={submit}>CREATE ACCOUNT</Button>
+        <SubmitButton
+          text="CREATE ACCOUNT"
+          isLoading={isCreatingAccount}
+          onClick={submit}
+          error={createAccountErrorMessage!}
+        ></SubmitButton>
       </Grid>
     </Grid>
   );

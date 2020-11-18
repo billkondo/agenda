@@ -7,6 +7,7 @@ type Props = {
   setPassword: (password: string) => void;
   error?: string;
   label: string;
+  disabled: boolean;
 };
 
 const PasswordInput: React.FC<Props> = ({
@@ -14,6 +15,7 @@ const PasswordInput: React.FC<Props> = ({
   setPassword,
   error,
   label,
+  disabled,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -42,6 +44,7 @@ const PasswordInput: React.FC<Props> = ({
           </InputAdornment>
         ),
       }}
+      disabled={disabled}
     ></TextField>
   );
 };
