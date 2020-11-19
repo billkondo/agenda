@@ -1,9 +1,10 @@
+import { AuthenticationState } from './state';
 import {
-  AuthenticationActionTypes,
-  AuthenticationState,
+  AUTHENTICATE,
   START_CREATE_ACCOUNT,
   END_CREATE_ACCOUNT,
-} from './types';
+} from './events';
+import { AuthenticationActionTypes } from './actions';
 
 const initialState: AuthenticationState = {
   isAuthenticated: false,
@@ -18,6 +19,13 @@ export const authenticationReducer = (
   action: AuthenticationActionTypes
 ): AuthenticationState => {
   switch (action.type) {
+    case AUTHENTICATE:
+      return {
+        ...state,
+        email: action.payload.email,
+        isAuthenticated: true,
+      };
+
     case START_CREATE_ACCOUNT:
       return {
         ...state,
