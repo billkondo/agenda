@@ -1,19 +1,25 @@
-export const Events = {
-  LOGIN: 'LOGIN',
-};
+export const START_CREATE_ACCOUNT = 'START_CREATE_ACCOUNT';
+export const END_CREATE_ACCOUNT = 'END_CREATE_ACCOUNT';
 
-export type LoginForm = {
-  email: string;
-  password: string;
-};
-
-interface LoginAction {
-  type: typeof Events.LOGIN;
-  payload: LoginForm;
+interface StartCreateAccountAction {
+  type: typeof START_CREATE_ACCOUNT;
 }
 
-export type AuthenticationActionTypes = LoginAction;
+interface EndCreateAccountAction {
+  type: typeof END_CREATE_ACCOUNT;
+  payload: {
+    error_message?: string;
+  };
+}
+
+export type AuthenticationActionTypes =
+  | StartCreateAccountAction
+  | EndCreateAccountAction;
 
 export type AuthenticationState = {
   isAuthenticated: boolean;
+  email: string;
+
+  isCreatingAccount: boolean;
+  createAccountErrorMessage: string;
 };

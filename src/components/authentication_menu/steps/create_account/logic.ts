@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import { errorLogger } from 'error_handlers/error_logger';
-import { useCreateAccount } from 'hooks/authentication/create_account';
+import { useCreateAccount } from 'store/authentication';
 
 type Form = {
   email: string;
@@ -22,13 +21,14 @@ type Errors = {
 };
 
 export const useLogic = () => {
+  const {
+    createAccount,
+    isCreatingAccount,
+    createAccountErrorMessage,
+  } = useCreateAccount();
+
   const [form, setForm] = useState<Form>(initialForm);
   const [errors, setErrors] = useState<Errors>({});
-
-  const [submitErrorMessage, setSubmitErrorMessage] = useState<string>();
-  const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
-
-  const { createAccount } = useCreateAccount();
 
   const submit = async () => {
     const formErrors = _validateForm(form);
@@ -36,18 +36,8 @@ export const useLogic = () => {
 
     if (!_isErrorsEmpty(formErrors)) return;
 
-    setIsSubmiting(true);
-
     const { email, password } = form;
-
-    try {
-      await createAccount(email, password);
-      setIsSubmiting(false);
-    } catch (error) {
-      setIsSubmiting(false);
-      setSubmitErrorMessage('Account creationg failed');
-      errorLogger.log(error);
-    }
+    createAccount(email, password);
   };
 
   const onFormChange = (key: string, value: string) =>
@@ -61,8 +51,8 @@ export const useLogic = () => {
     errors,
     submit,
     onFormChange,
-    isCreatingAccount: isSubmiting,
-    createAccountErrorMessage: submitErrorMessage,
+    isCreatingAccount,
+    createAccountErrorMessage,
   };
 };
 

@@ -1,6 +1,6 @@
 const ErrorLogger = () => {
   const log = (error: Error) => {
-    console.log(error);
+    console.log('LOG', error);
   };
 
   return { log };
