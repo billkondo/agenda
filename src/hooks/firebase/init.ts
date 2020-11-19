@@ -5,8 +5,13 @@ import 'firebase/auth';
 
 import { firebaseConfig } from 'config/firebaseConfig';
 
+let initialized = false;
+
 export const useFirebase = () => {
   useEffect(() => {
-    firebase.initializeApp(firebaseConfig);
+    if (!initialized) {
+      firebase.initializeApp(firebaseConfig);
+      initialized = true;
+    }
   }, []);
 };
