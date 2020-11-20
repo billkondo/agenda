@@ -99,7 +99,7 @@ const SelectDateTime: React.FC<Props> = ({
       )}
       <Grid item>
         <Button
-          disabled={!wasDateTimeSelected}
+          disabled={!wasBaseTimeZoneSelected || !wasDateTimeSelected}
           onClick={onContinueButtonClicked}
         >
           Next Step
