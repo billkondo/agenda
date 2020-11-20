@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { TextField, InputAdornment, IconButton } from '@material-ui/core';
+import {
+  TextField,
+  InputAdornment,
+  IconButton,
+  colors,
+} from '@material-ui/core';
 import { VisibilityRounded, VisibilityOffRounded } from '@material-ui/icons';
 
 type Props = {
@@ -7,7 +12,7 @@ type Props = {
   setPassword: (password: string) => void;
   error?: string;
   label: string;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 const PasswordInput: React.FC<Props> = ({
@@ -15,11 +20,13 @@ const PasswordInput: React.FC<Props> = ({
   setPassword,
   error,
   label,
-  disabled,
+  disabled = false,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const changePasswordVisibility = () => setShowPassword(!showPassword);
+
+  const iconColor = !!error ? colors.red[400] : colors.grey.A700;
 
   return (
     <TextField
@@ -34,7 +41,10 @@ const PasswordInput: React.FC<Props> = ({
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton onClick={changePasswordVisibility}>
+            <IconButton
+              onClick={changePasswordVisibility}
+              style={{ color: iconColor }}
+            >
               {showPassword ? (
                 <VisibilityRounded></VisibilityRounded>
               ) : (

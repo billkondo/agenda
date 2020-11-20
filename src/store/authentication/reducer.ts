@@ -1,6 +1,8 @@
 import { AuthenticationState } from './state';
 import {
   AUTHENTICATE,
+  START_SIGN_IN,
+  END_SIGN_IN,
   START_CREATE_ACCOUNT,
   END_CREATE_ACCOUNT,
 } from './events';
@@ -10,8 +12,9 @@ const initialState: AuthenticationState = {
   isAuthenticated: false,
   email: '',
 
+  isSigningIn: false,
+
   isCreatingAccount: false,
-  createAccountErrorMessage: '',
 };
 
 export const authenticationReducer = (
@@ -26,6 +29,20 @@ export const authenticationReducer = (
         isAuthenticated: true,
       };
 
+    case START_SIGN_IN:
+      return {
+        ...state,
+        isSigningIn: true,
+        signInErrorMessage: '',
+      };
+
+    case END_SIGN_IN:
+      return {
+        ...state,
+        isSigningIn: false,
+        signInErrorMessage: action.payload.error_message,
+      };
+
     case START_CREATE_ACCOUNT:
       return {
         ...state,
@@ -37,7 +54,7 @@ export const authenticationReducer = (
       return {
         ...state,
         isCreatingAccount: false,
-        createAccountErrorMessage: action.payload.error_message ?? '',
+        createAccountErrorMessage: action.payload.error_message,
       };
 
     default:

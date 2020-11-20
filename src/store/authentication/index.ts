@@ -1,2 +1,2 @@
 export { authenticationReducer } from './reducer';
-export { useCreateAccount } from './hooks';
+export { useCreateAccount, useLogin } from './hooks';

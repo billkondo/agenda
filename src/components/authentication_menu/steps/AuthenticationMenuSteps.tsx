@@ -4,6 +4,7 @@ import { Steps } from '../useLogic';
 
 import AuthenticationMenuButtons from './AuthenticationMenuButtons';
 import AuthenticationMenuCreateAccount from './create_account';
+import AuthenticationMenuLogin from './login';
 
 type Props = {
   step: Steps;
@@ -26,7 +27,11 @@ const AuthenticationMenuSteps: React.FC<Props> = ({ step, setStep }) => {
       ></AuthenticationMenuCreateAccount>
     );
 
-  return <React.Fragment></React.Fragment>;
+  return (
+    <AuthenticationMenuLogin
+      onBackButtonPressed={() => setStep(Steps.INITIAL)}
+    ></AuthenticationMenuLogin>
+  );
 };
 
 export default AuthenticationMenuSteps;

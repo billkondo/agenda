@@ -1,32 +1,30 @@
 import React from 'react';
-import { Grid, TextField, IconButton, Typography } from '@material-ui/core';
+import { Grid, IconButton, TextField, Typography } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 
-import { useLogic } from './logic';
+import { APP_NAME } from 'config/global';
 
 import { PasswordInput } from 'components/inputs';
 import { SubmitButton } from 'components/buttons';
+
+import { useLogic } from './logic';
 
 type Props = {
   onBackButtonPressed: () => void;
 };
 
-const AuthenticationMenuCreateAccount: React.FC<Props> = ({
-  onBackButtonPressed,
-}) => {
+const AuthenticationMenuLogin: React.FC<Props> = ({ onBackButtonPressed }) => {
   const {
+    onFormChange,
     form,
     errors,
-    onFormChange,
     submit,
-    createAccountErrorMessage,
-    isCreatingAccount,
+    isSigningIn,
+    signInErrorMessage,
   } = useLogic();
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-    onFormChange(name, value);
-  };
+  const onChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    onFormChange(key, e.target.value);
 
   return (
     <Grid container direction="column">
@@ -37,20 +35,20 @@ const AuthenticationMenuCreateAccount: React.FC<Props> = ({
       </Grid>
 
       <Grid item>
-        <Typography>Create your account</Typography>
+        <Typography>Sign in to {APP_NAME}</Typography>
       </Grid>
 
       <Grid item>
         <TextField
           label="Email"
           type="email"
-          onChange={onChange}
+          onChange={onChange('email')}
           value={form.email}
           name="email"
           fullWidth
           error={!!errors.email}
           helperText={errors.email}
-          disabled={isCreatingAccount}
+          disabled={isSigningIn}
         ></TextField>
       </Grid>
 
@@ -60,30 +58,20 @@ const AuthenticationMenuCreateAccount: React.FC<Props> = ({
           setPassword={(password) => onFormChange('password', password)}
           error={errors.password}
           label="Password"
-          disabled={isCreatingAccount}
-        ></PasswordInput>
-      </Grid>
-
-      <Grid item>
-        <PasswordInput
-          password={form.confirmPassword}
-          setPassword={(password) => onFormChange('confirmPassword', password)}
-          error={errors.confirmPassword}
-          label="Confirm Password"
-          disabled={isCreatingAccount}
+          disabled={isSigningIn}
         ></PasswordInput>
       </Grid>
 
       <Grid item>
         <SubmitButton
-          text="CREATE ACCOUNT"
-          isLoading={isCreatingAccount}
+          text="LOGIN"
+          isLoading={isSigningIn}
           onClick={submit}
-          error={createAccountErrorMessage!}
+          error={signInErrorMessage!}
         ></SubmitButton>
       </Grid>
     </Grid>
   );
 };
 
-export default AuthenticationMenuCreateAccount;
+export default AuthenticationMenuLogin;

@@ -4,6 +4,8 @@ import { Api } from 'api';
 
 import {
   authenticateAction,
+  startSignInAction,
+  endSignInAction,
   startCreateAccountAction,
   endCreateAccountAction,
 } from './actions';
@@ -19,6 +21,22 @@ export function createAccountThunk(email: string, password: string) {
       dispatch(endCreateAccountAction());
     } catch (error) {
       dispatch(endCreateAccountAction('Account creation failed'));
+      throw error;
+    }
+  };
+}
+
+export function loginThunk(email: string, password: string) {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(startSignInAction());
+
+      await Api.Authentication.login(email, password);
+
+      dispatch(authenticateAction(email));
+      dispatch(endSignInAction());
+    } catch (error) {
+      dispatch(endSignInAction('Login failed'));
       throw error;
     }
   };

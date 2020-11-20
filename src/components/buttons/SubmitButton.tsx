@@ -3,12 +3,17 @@ import { Button, LinearProgress, Typography } from '@material-ui/core';
 
 type Props = {
   text: string;
-  isLoading: boolean;
+  isLoading?: boolean;
   onClick: () => void;
   error?: string;
 };
 
-const SubmitButton: React.FC<Props> = ({ text, isLoading, onClick, error }) => {
+const SubmitButton: React.FC<Props> = ({
+  text,
+  isLoading = false,
+  onClick,
+  error,
+}) => {
   return (
     <React.Fragment>
       <Button onClick={onClick}>{text}</Button>

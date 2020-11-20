@@ -1,5 +1,7 @@
 import {
   AUTHENTICATE,
+  START_SIGN_IN,
+  END_SIGN_IN,
   START_CREATE_ACCOUNT,
   END_CREATE_ACCOUNT,
 } from './events';
@@ -10,9 +12,29 @@ interface AuthenticateAction {
     email: string;
   };
 }
-export const authenticateAction = (email: string) => ({
+export const authenticateAction = (
+  email: string
+): AuthenticationActionTypes => ({
   type: AUTHENTICATE,
   payload: { email },
+});
+
+interface StartSignIn {
+  type: typeof START_SIGN_IN;
+}
+export const startSignInAction = (): AuthenticationActionTypes => ({
+  type: START_SIGN_IN,
+});
+
+interface EndSignIn {
+  type: typeof END_SIGN_IN;
+  payload: { error_message?: string };
+}
+export const endSignInAction = (
+  error_message?: string
+): AuthenticationActionTypes => ({
+  type: END_SIGN_IN,
+  payload: { error_message },
 });
 
 interface StartCreateAccountAction {
@@ -37,5 +59,7 @@ export const endCreateAccountAction = (
 
 export type AuthenticationActionTypes =
   | AuthenticateAction
+  | StartSignIn
+  | EndSignIn
   | StartCreateAccountAction
   | EndCreateAccountAction;

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { createAccountThunk } from './thunks';
+import { createAccountThunk, loginThunk } from './thunks';
 
 import { RootState } from 'store';
 
@@ -21,4 +21,20 @@ export const useCreateAccount = () => {
     dispatch(createAccountThunk(email, password));
 
   return { createAccount, isCreatingAccount, createAccountErrorMessage };
+};
+
+export const useLogin = () => {
+  const dispatch = useDispatch();
+  const { isSigningIn, signInErrorMessage } = useSelector(
+    (state: RootState) => {
+      const { isSigningIn, signInErrorMessage } = state.authentication;
+
+      return { isSigningIn, signInErrorMessage };
+    }
+  );
+
+  const login = (email: string, password: string) =>
+    dispatch(loginThunk(email, password));
+
+  return { login, isSigningIn, signInErrorMessage };
 };
