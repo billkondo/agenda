@@ -1,19 +1,9 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-
-import { RootState } from 'store';
-
-const selectAuthenticationState = (state: RootState) => state.authentication;
+import { useAuthentication } from 'store/authentication';
 
 export const useLogic = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-
-  const { isAuthenticated } = useSelector(selectAuthenticationState);
+  const { isAuthenticated } = useAuthentication();
 
   return {
-    title,
-    description,
     isAuthenticated,
   };
 };

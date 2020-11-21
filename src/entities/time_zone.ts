@@ -1,17 +1,14 @@
 import assert from 'assert';
 
 type OptionalParams = {
-  timezone_name: string | null;
-};
-const defaultOptionalParams: OptionalParams = {
-  timezone_name: null,
+  timezone_name?: string;
 };
 
 export class TimeZone {
   gmt_offset: number;
   timezone_name: string;
 
-  constructor(gmt_offset: number, optional = defaultOptionalParams) {
+  constructor(gmt_offset: number, optional: OptionalParams = {}) {
     assert(gmt_offset != null);
 
     const { timezone_name } = optional;

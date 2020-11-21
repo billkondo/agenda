@@ -22,6 +22,12 @@ export type Form = {
 
   eventDateTime: DateTime | null;
   setEventDateTime: (dateTime: DateTime) => void;
+
+  title: string;
+  setTitle: (title: string) => void;
+
+  description: string;
+  setDescription: (description: string) => void;
 };
 
 export const useForm = (): Form => {
@@ -33,6 +39,8 @@ export const useForm = (): Form => {
   const [userDateTime, _setUserDateTime] = useState<DateTime | null>(null);
   const [eventDateTime, _setEventDateTime] = useState<DateTime | null>(null);
   const [baseTimeZone, _setBaseTimeZone] = useState<TimeZone | null>(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const setDateTime = (
     updateFirst: (date: DateTime) => void,
@@ -72,5 +80,9 @@ export const useForm = (): Form => {
     ),
     baseTimeZone,
     setBaseTimeZone,
+    title,
+    setTitle,
+    description,
+    setDescription,
   };
 };

@@ -96,6 +96,10 @@ const Step = ({ step, moveNextStep, movePreviousStep, form }: StepProps) => {
       return (
         <SelectTitleDescription
           onBackButtonPressed={movePreviousStep}
+          title={form.title}
+          setTitle={form.setTitle}
+          description={form.description}
+          setDescription={form.setDescription}
         ></SelectTitleDescription>
       );
   }

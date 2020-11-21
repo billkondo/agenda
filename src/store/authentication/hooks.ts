@@ -4,17 +4,18 @@ import { createAccountThunk, loginThunk } from './thunks';
 
 import { RootState } from 'store';
 
+export const useAuthentication = () => {
+  const { isAuthenticated } = useSelector(
+    (state: RootState) => state.authentication
+  );
+
+  return { isAuthenticated };
+};
+
 export const useCreateAccount = () => {
   const dispatch = useDispatch();
   const { isCreatingAccount, createAccountErrorMessage } = useSelector(
-    (state: RootState) => {
-      const {
-        isCreatingAccount,
-        createAccountErrorMessage,
-      } = state.authentication;
-
-      return { isCreatingAccount, createAccountErrorMessage };
-    }
+    (state: RootState) => state.authentication
   );
 
   const createAccount = (email: string, password: string) =>
@@ -26,11 +27,7 @@ export const useCreateAccount = () => {
 export const useLogin = () => {
   const dispatch = useDispatch();
   const { isSigningIn, signInErrorMessage } = useSelector(
-    (state: RootState) => {
-      const { isSigningIn, signInErrorMessage } = state.authentication;
-
-      return { isSigningIn, signInErrorMessage };
-    }
+    (state: RootState) => state.authentication
   );
 
   const login = (email: string, password: string) =>
