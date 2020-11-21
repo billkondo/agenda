@@ -9,7 +9,9 @@ type Props = {
 };
 
 const AuthenticationMenu: React.FC<Props> = ({ title }) => {
-  const { step, setStep } = useLogic();
+  const { step, setStep, isAuthenticated } = useLogic();
+
+  if (isAuthenticated) return <React.Fragment></React.Fragment>;
 
   return (
     <Grid container direction="column">

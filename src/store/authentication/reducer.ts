@@ -5,6 +5,7 @@ import {
   END_SIGN_IN,
   START_CREATE_ACCOUNT,
   END_CREATE_ACCOUNT,
+  LOGOUT,
 } from './events';
 import { AuthenticationActionTypes } from './actions';
 
@@ -55,6 +56,12 @@ export const authenticationReducer = (
         ...state,
         isCreatingAccount: false,
         createAccountErrorMessage: action.payload.error_message,
+      };
+
+    case LOGOUT:
+      return {
+        ...state,
+        isAuthenticated: false,
       };
 
     default:

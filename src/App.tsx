@@ -6,6 +6,8 @@ import { Settings } from 'luxon';
 import { store } from 'store';
 import { useFirebase } from 'hooks/firebase/init';
 
+import Header from 'components/header';
+
 const App = () => {
   useFirebase();
 
@@ -15,6 +17,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
+      <Header></Header>
       <Router></Router>
     </Provider>
   );

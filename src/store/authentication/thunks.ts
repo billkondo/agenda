@@ -8,6 +8,7 @@ import {
   endSignInAction,
   startCreateAccountAction,
   endCreateAccountAction,
+  logoutAction,
 } from './actions';
 
 export function createAccountThunk(email: string, password: string) {
@@ -39,5 +40,12 @@ export function loginThunk(email: string, password: string) {
       dispatch(endSignInAction('Login failed'));
       throw error;
     }
+  };
+}
+
+export function logoutThunk() {
+  return async (dispatch: Dispatch) => {
+    await Api.Authentication.logout();
+    dispatch(logoutAction());
   };
 }

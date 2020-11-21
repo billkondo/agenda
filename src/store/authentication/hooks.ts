@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { createAccountThunk, loginThunk } from './thunks';
+import { createAccountThunk, loginThunk, logoutThunk } from './thunks';
 
 import { RootState } from 'store';
 
@@ -34,4 +34,12 @@ export const useLogin = () => {
     dispatch(loginThunk(email, password));
 
   return { login, isSigningIn, signInErrorMessage };
+};
+
+export const useLogout = () => {
+  const dispatch = useDispatch();
+
+  const logout = () => dispatch(logoutThunk());
+
+  return { logout };
 };

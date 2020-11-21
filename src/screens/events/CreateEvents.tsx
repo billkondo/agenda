@@ -16,9 +16,11 @@ const CreateEvents = () => {
   const form = useForm();
 
   return (
-    <Grid container>
+    <Grid container direction="column">
       <Grid item>
         <Typography>Create events</Typography>
+      </Grid>
+      <Grid item>
         <Step
           step={step}
           moveNextStep={moveNextStep}

@@ -4,6 +4,7 @@ import {
   END_SIGN_IN,
   START_CREATE_ACCOUNT,
   END_CREATE_ACCOUNT,
+  LOGOUT,
 } from './events';
 
 interface AuthenticateAction {
@@ -57,9 +58,17 @@ export const endCreateAccountAction = (
   payload: { error_message },
 });
 
+interface LogoutAction {
+  type: typeof LOGOUT;
+}
+export const logoutAction = (): AuthenticationActionTypes => ({
+  type: LOGOUT,
+});
+
 export type AuthenticationActionTypes =
   | AuthenticateAction
   | StartSignIn
   | EndSignIn
   | StartCreateAccountAction
-  | EndCreateAccountAction;
+  | EndCreateAccountAction
+  | LogoutAction;

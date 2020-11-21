@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useAuthentication } from 'store/authentication';
+
 export enum Steps {
   INITIAL,
   LOGIN,
@@ -7,7 +9,9 @@ export enum Steps {
 }
 
 export const useLogic = () => {
+  const { isAuthenticated } = useAuthentication();
+
   const [step, setStep] = useState(Steps.INITIAL);
 
-  return { step, setStep };
+  return { step, setStep, isAuthenticated };
 };

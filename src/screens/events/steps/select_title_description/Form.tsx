@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 import { TextFieldInput } from 'components/inputs';
 
@@ -19,6 +19,9 @@ const Form: React.FC<Props> = ({
 }) => {
   return (
     <Grid container direction="column">
+      <Grid item>
+        <Typography>Give a title and a description for the event</Typography>
+      </Grid>
       <Grid item>
         <TextFieldInput
           text={title}
