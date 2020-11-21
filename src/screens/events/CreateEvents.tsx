@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 
 import { useForm, Form } from './hooks/form';
-import { useSteps } from './hooks/steps';
+import { useSteps } from './hooks/useSteps';
 
 import SelectUserTimeZone from './steps/select_user_time_zone/SelectUserTimeZone';
 import SelectEventTimeZone from './steps/select_event_time_zone/SelectEventTimeZone';
