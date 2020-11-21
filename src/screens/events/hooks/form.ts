@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DateTime, Settings } from 'luxon';
+import { DateTime } from 'luxon';
 
 import { EventTimeType } from 'entities/event_time_type';
 import { TimeZone } from 'entities/time_zone';
@@ -38,42 +38,54 @@ export const useForm = (): Form => {
   );
   const [userDateTime, _setUserDateTime] = useState<DateTime | null>(null);
   const [eventDateTime, _setEventDateTime] = useState<DateTime | null>(null);
-  const [baseTimeZone, _setBaseTimeZone] = useState<TimeZone | null>(null);
+  const [baseTimeZone, setBaseTimeZone] = useState<TimeZone | null>(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
   const setDateTime = (
+    firstTimeZone: TimeZone | null,
     updateFirst: (date: DateTime) => void,
     secondTimeZone: TimeZone | null,
     updateSecond: (date: DateTime) => void
   ) => (date: DateTime) => {
-    const isoDate = date.toISO();
+    const offsetDifference =
+      firstTimeZone!.gmt_offset - secondTimeZone!.gmt_offset;
+
     updateFirst(date);
     updateSecond(
-      DateTime.fromISO(isoDate, { zone: secondTimeZone!.timezone_name })
+      date.minus({
+        hours: offsetDifference,
+      })
     );
   };
 
-  const setBaseTimeZone = (timeZone: TimeZone) => {
-    _setBaseTimeZone(timeZone);
-    Settings.defaultZoneName = timeZone.timezone_name;
+  const resetDateTimeOnTimeZoneSelected = (
+    fn: (timeZone: TimeZone) => void
+  ) => {
+    return (timeZone: TimeZone) => {
+      _setUserDateTime(null);
+      _setEventDateTime(null);
+      fn(timeZone);
+    };
   };
 
   return {
     userTimeZone,
-    setUserTimeZone,
+    setUserTimeZone: resetDateTimeOnTimeZoneSelected(setUserTimeZone),
     eventTimeZone,
-    setEventTimeZone,
+    setEventTimeZone: resetDateTimeOnTimeZoneSelected(setEventTimeZone),
     eventTimeType,
     setEventTimeType,
     userDateTime,
     setUserDateTime: setDateTime(
+      userTimeZone,
       _setUserDateTime,
       eventTimeZone,
       _setEventDateTime
     ),
     eventDateTime,
     setEventDateTime: setDateTime(
+      eventTimeZone,
       _setEventDateTime,
       userTimeZone,
       _setUserDateTime
